@@ -1,10 +1,11 @@
 package br.com.reactivestream;
 
+import java.util.Random;
 import java.util.concurrent.Flow;
 import java.util.concurrent.Flow.*;
 
 public class PrintSubscriber implements Subscriber<Integer> {
-    private Flow.Subscription subscription;
+    public Flow.Subscription subscription;
 
     @Override
     public void onSubscribe(Subscription subscription) {
@@ -17,7 +18,12 @@ public class PrintSubscriber implements Subscriber<Integer> {
         System.out.println("Processando onNext");
         System.out.println(Thread.currentThread().getName());
         System.out.println("Received item: " + item);
-        subscription.request(2);
+        try {
+            Thread.sleep(new Random().nextInt(10) * 100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        subscription.request(1);
     }
 
     @Override
